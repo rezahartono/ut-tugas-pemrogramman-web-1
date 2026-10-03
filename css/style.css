@@ -1,0 +1,96 @@
+:root {
+    --primary-color: #003178;
+    --secondary-color: #D9E2FF;
+    --background-color: #FAF8FF;
+    --input-background-color: #F2F3FF;
+    --text-color: #000000;
+    --font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color) !important;
+    font-family: var(--font-family) !important;
+}
+
+.login-container {
+    border-top: 5px solid var(--primary-color) !important;
+}
+
+.forgot-label {
+    font-weight: 600 !important;
+    color: var(--primary-color) !important;
+}
+
+.btn-primary {
+    background-color: var(--primary-color) !important;
+    color: white !important;
+    font-weight: 600 !important;
+    font-size: 14px !important;
+    cursor: pointer !important;
+    height: 46px !important;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-color) !important;
+    opacity: 0.7 !important;
+}
+
+.input-container{
+    background-color: var(--input-background-color) !important;
+    font-size: 14px !important;
+    height: 46px !important;
+}
+
+.badge {
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    background-color: var(--secondary-color) !important;
+    padding: 5px 10px;
+    border-radius: 100px;
+}
+
+.menu-item {
+    padding: 10px 15px;
+}
+
+.menu-item>a {
+    text-decoration: none;
+    gap: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.menu-item.active {
+    background-color: var(--primary-color) !important;
+    font-weight: 500 !important;
+    color: white !important;
+}
+
+@keyframes notifikasi-masuk {
+    from {
+        opacity: 0;
+        transform: translateX(24px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+}
+
+.notifikasi-muncul {
+    animation: notifikasi-masuk 0.22s ease-out;
+}
+
+@keyframes notifikasi-keluar {
+    to {
+        opacity: 0;
+        transform: translateX(24px) scale(0.98);
+    }
+}
+
+.notifikasi-hilang {
+    animation: notifikasi-keluar 0.2s ease-in forwards;
+}

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SITTA - Tracking Pengiriman</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style type="text/tailwindcss">
+        @theme {
+            --color-primary: #003178;
+            --color-secondary: #D9E2FF;
+            --color-third: #F2F3FF;
+        }
+    </style>
+    <style>
+        @keyframes popup-muncul {
+            from {
+                opacity: 0;
+                transform: scale(0.96) translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .popup-muncul {
+            animation: popup-muncul 0.18s ease-out;
+        }
+    </style>
+</head>
+
+<body class="w-screen h-screen flex overflow-hidden">
+    <aside class="w-64 bg-white shadow-sm hidden md:flex flex-col">
+        <div class="grid grid-cols-1">
+            <div class="col-span-1">
+                <div class="flex items-center gap-2 px-5 py-4">
+                    <img src="assets/logo-ut.webp" alt="Logo" class="w-6">
+                    <div class="flex flex-col">
+                        <span class="font-semibold text-lg">SITTA UT</span>
+                        <span class="text-[11px] text-gray-500">Sistem Informasi Tiras & Transaksi Bahan Ajar</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex-1 bg-third overflow-y-auto">
+            <ul class="flex flex-col text-sm">
+                <li class="menu-item text-gray-700"><a href="index.html"><i class="fa-solid fa-gauge"></i>Dashboard</a>
+                </li>
+                <li class="menu-item text-gray-700"><a href="stock.html"><i class="fa-solid fa-book"></i></i>Informasi
+                        Bahan
+                        Ajar</a></li>
+                <li class="menu-item text-gray-700 active"><a><i class="fa-solid fa-truck-fast"></i>Tracking
+                        Pengiriman</a></li>
+            </ul>
+        </div>
+        <div class="px-5 py-2">
+            <button onclick="logout()"
+                class="w-full cursor-pointer text-red-700 hover:text-red-700/60 py-2 px-4 rounded-lg flex items-center justify-center gap-2">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                Keluar
+            </button>
+        </div>
+    </aside>
+    <main class="flex-1 flex flex-col min-w-0 overflow-y-auto">
+        <div class="grid grid-cols-2 px-10 py-[10px] shadow-sm bg-white">
+            <div class="col-span-1 flex items-center gap-2">
+                <nav class="flex" aria-label="Breadcrumb">
+                    <ol class="inline-flex items-center space-x-1 md:space-x-1">
+                        <li class="inline-flex items-center">
+                            <a href="#"
+                                class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-500">
+                                <i class="fa-solid fa-house me-2"></i>Home
+                            </a>
+                        </li>
+                        <li>
+                            <div class="flex items-center">
+                                <i class="fa-solid fa-chevron-right text-gray-400 mx-2"></i>
+                                <span class="text-sm font-medium text-gray-500">Tracking Pengiriman</span>
+                            </div>
+                        </li>
+                    </ol>
+            </div>
+            <div class="col-span-1 flex items-center justify-end">
+                <div class="flex flex-col items-end">
+                    <span class="font-semibold" data-user="nama">Reza Hartono</span>
+                    <span class="text-xs text-gray-500" data-user="role">Puslaba</span>
+                </div>
+                <img src="https://ui-avatars.com/api/?name=Reza+Hartono" alt="Profile" data-user-avatar
+                    class="w-10 h-10 rounded-full ml-3 border-2 border-gray-400">
+            </div>
+        </div>
+        <div class="grid grid-cols-1 px-10 py-5 gap-5">
+            <div class="col-span-1 flex flex-col gap-5">
+                <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                    <div class="flex flex-col">
+                        <span class="text-xl font-semibold">Tracking Pengiriman</span>
+                        <span class="text-sm text-gray-500">Pantau status pengiriman bahan ajar berdasarkan nomor
+                            DO</span>
+                    </div>
+                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+                        <div class="input-container flex items-center gap-2 rounded-lg px-3 py-2">
+                            <i class="fa-solid fa-magnifying-glass text-gray-500"></i>
+                            <input type="text" id="inputPencarian" placeholder="Cari nomor DO, nama, atau ekspedisi"
+                                class="w-full bg-transparent focus:outline-none sm:w-64">
+                        </div>
+                        <select id="filterStatus"
+                            class="input-container rounded-lg px-3 cursor-pointer focus:outline-none">
+                            <option value="">Semua Status</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between text-sm text-gray-500">
+                    <span>Menampilkan <span id="jumlahTampil" class="font-semibold text-gray-700">0</span> nomor
+                        DO</span>
+                    <span>Masih diproses: <span id="totalProses" class="font-semibold text-gray-700">0</span>
+                        pengiriman</span>
+                </div>
+
+                <div id="statusMemuat"
+                    class="flex items-center justify-center gap-2 bg-white rounded-xl shadow-sm py-10 text-sm text-gray-500">
+                    <i class="fa-solid fa-spinner fa-spin"></i> Memuat data tracking pengiriman...
+                </div>
+
+                <div id="daftarTracking" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4"></div>
+
+                <div id="dataKosong"
+                    class="hidden flex-col items-center justify-center gap-2 bg-white rounded-xl shadow-sm py-14 text-center">
+                    <i class="fa-regular fa-folder-open text-3xl text-gray-400"></i>
+                    <span class="font-semibold text-gray-700">Data tracking tidak ditemukan</span>
+                    <span class="text-sm text-gray-500">Coba ubah kata kunci pencarian atau filter status
+                        pengiriman</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="modalDetail"
+        class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+        <div id="modalPanel"
+            class="bg-white w-full max-w-3xl max-h-[90vh] rounded-2xl shadow-xl flex flex-col overflow-hidden">
+            <div class="flex items-start justify-between gap-4 px-5 py-4 border-b border-gray-100">
+                <div class="flex flex-col">
+                    <span class="font-semibold">Detail Tracking Pengiriman</span>
+                    <span id="modalNomor" class="text-xs text-gray-500">-</span>
+                </div>
+                <button type="button" id="tombolTutupAtas"
+                    class="w-8 h-8 cursor-pointer rounded-full flex items-center justify-center text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="flex-1 overflow-y-auto p-5 grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div class="flex flex-col gap-4">
+                    <div class="flex flex-col gap-2">
+                        <div class="flex items-center gap-2">
+                            <span class="badge">Pengiriman</span>
+                            <span id="modalStatus" class="text-xs font-semibold px-2.5 py-1 rounded-full">-</span>
+                        </div>
+                        <span id="modalNama" class="text-lg font-semibold leading-snug">-</span>
+                        <span id="modalRingkas" class="text-sm text-gray-500">-</span>
+                    </div>
+                    <div id="modalFields" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
+                    <div class="rounded-xl bg-third px-4 py-3 flex items-center justify-between">
+                        <span class="text-sm text-gray-600">Total transaksi</span>
+                        <span id="modalTotal" class="text-xl font-semibold text-primary">Rp 0</span>
+                    </div>
+                </div>
+                <div class="flex flex-col gap-4">
+                    <div class="flex items-center justify-between gap-3">
+                        <span class="font-semibold flex items-center gap-2">
+                            <i class="fa-solid fa-route text-primary"></i> Riwayat Perjalanan
+                        </span>
+                        <span id="modalJumlahPerjalanan"
+                            class="text-xs font-semibold text-gray-500 bg-gray-100 px-2.5 py-1 rounded-full">0
+                            riwayat</span>
+                    </div>
+                    <div id="modalTimeline" class="flex flex-col"></div>
+                </div>
+            </div>
+            <div class="flex items-center justify-end px-5 py-4 border-t border-gray-100">
+                <button type="button" id="tombolTutup" class="btn-primary py-2 px-5 rounded-lg">Tutup</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://kit.fontawesome.com/09f62db77c.js" crossorigin="anonymous"></script>
+    <script src="js/script.js"></script>
+    <script src="js/tracking.js"></script>
+    <script src="js/notifikasi.js"></script>
+    <script>checkLogin(); tampilkanPenggunaLogin();</script>
+</body>
+
+</html>

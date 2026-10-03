@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SITTA - Login</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style type="text/tailwindcss">
+        @theme {
+            --color-primary: #003178;
+            --color-third: #F2F3FF;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="h-screen w-screen flex items-center justify-center">
+        <div class="login-container bg-white w-[30%] rounded-lg grid grid-cols-1 gap-5 shadow">
+            <div class="col-span-1 gap-1 flex flex-col items-center pt-5 px-5">
+                <img src="assets/logo-ut.webp" alt="Logo" class="w-24 mb-4">
+                <span class="badge"><i class="fa-solid fa-circle me-2 text-xs"></i>SISTEM INFORMASI TERPADU</span>
+                <span class="text-2xl font-semibold">Masuk ke SITTA</span>
+                <span class="text-center text-xs text-gray-500">Sistem Informasi Tiras & Transaksi Bahan
+                    Ajar<br />Universitas
+                    Terbuka</span>
+            </div>
+            <div class="col-span-1 px-5">
+                <form action="#" id="formLogin" class="grid grid-cols-1 gap-2">
+                    <div class="col-span-1">
+                        <label for="email" class="text-sm font-semibold">Email</label>
+                        <div
+                            class="group input-container flex items-center rounded-lg px-3 py-2 mt-1 group-focus-within:outline-none focus:ring group-focus-within:ring-blue-500 ">
+                            <i class="fa-regular fa-envelope"></i>
+                            <input type="email" name="email" id="email"
+                                class="w-full focus:outline-none focus:ring-0 focus:border-transparent ml-2"
+                                placeholder="Masukkan email">
+                        </div>
+                    </div>
+                    <div class="col-span-1">
+                        <label for="password" class="text-sm font-semibold">Kata Sandi</label>
+                        <div
+                            class="group input-container flex items-center rounded-lg px-3 py-2 mt-1 group-focus-within:outline-none focus:ring group-focus-within:ring-blue-500 ">
+                            <i class="fa-solid fa-lock"></i>
+                            <input type="password" name="password" id="password"
+                                class="w-full focus:outline-none focus:ring-0 focus:border-transparent ml-2"
+                                placeholder="Masukkan kata sandi">
+                            <button type="button" id="togglePassword" class="ml-2">
+                                <i class="fa-regular fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-span-1 text-sm flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <input type="checkbox" name="remember" id="remember">
+                            <label for="remember">Ingat saya</label>
+                        </div>
+                        <a href="#" class="forgot-label hover:underline">Lupa kata sandi?</a>
+                    </div>
+                    <div class="col-span-1">
+                        <button type="submit" class="w-full btn-primary py-2 px-4 rounded-lg">Masuk</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-span-1 px-5 pt-2 py-5 bg-third text-center">
+                <span class="text-sm text-gray-500">Belum punya akun? <br />
+                    <a href="#" class="text-blue-500 hover:underline">Daftar
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </a>
+                </span>
+            </div>
+        </div>
+    </div>
+    <script src="https://kit.fontawesome.com/09f62db77c.js" crossorigin="anonymous"></script>
+    <script src="js/script.js"></script>
+    <script src="js/notifikasi.js"></script>
+    <script src="js/login.js"></script>
+</body>
+
+</html>
